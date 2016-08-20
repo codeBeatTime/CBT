@@ -1,0 +1,20 @@
+#parse("header.html")
+
+<center>
+<div class="wid1000">
+
+    <div class="">
+        #foreach ($question in $questions)
+        ---------------------------------------------------------------------------------------------------------------------------------------------------------
+        <br><br>
+            题目ID: $!{question.id} -->
+            <a href="/questions/datil/?questionId=$!{question.id}"><span class="time" >$!{question.name}</span>></a></li>
+        <br><br>
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------
+        <br>
+        #end
+        <div class=""></div>
+    </div>
+</div>
+</center>
+#parse("footer.html")
