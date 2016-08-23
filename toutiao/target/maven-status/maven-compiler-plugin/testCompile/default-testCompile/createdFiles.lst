@@ -1,2 +1,3 @@
 com\codebeattime\ToutiaoApplicationTests.class
 com\codebeattime\InitDatabaseTests.class
+com\codebeattime\QuestionDaoTest.class

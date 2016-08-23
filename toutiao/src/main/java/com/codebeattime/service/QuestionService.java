@@ -1,6 +1,7 @@
 package com.codebeattime.service;
 
 import com.codebeattime.dao.UserDAO;
+import com.codebeattime.dao.UserExamQuestionDAO;
 import com.codebeattime.dao.UserQuestionDAO;
 import com.codebeattime.model.Question;
 import com.codebeattime.model.User;
@@ -20,6 +21,7 @@ public class QuestionService {
     private UserQuestionDAO userQuestionDAO;
     @Autowired
     private UserDAO userDAO;
+
     //判断题目和答案是否相等
     public boolean isRight(String answer,Question question,User user){
 

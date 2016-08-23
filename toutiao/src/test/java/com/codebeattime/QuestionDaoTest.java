@@ -1,9 +1,7 @@
 package com.codebeattime;
 
-import com.codebeattime.dao.QuestionDAO;
-import com.codebeattime.dao.UserQuestionDAO;
-import com.codebeattime.model.Question;
-import com.codebeattime.model.UserQuestion;
+import com.codebeattime.dao.*;
+import com.codebeattime.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,21 +23,18 @@ public class QuestionDaoTest {
     private QuestionDAO questionDAO;
     @Autowired
     private UserQuestionDAO userQuestionDAO;
+    @Autowired
+    private ExamDAO examDAO;
+    @Autowired
+    private ExamQuestionDAO examQuestionDAO;
+    @Autowired
+    private UserExamQuestionDAO userExamQuestionDAO;
     @Test
     public void initData() {
-        for (int i=0;i<10;i++){
-            Question question = new Question();
-            question.setAnswer("3");
-            question.setqDescribe(""+i);
-            question.setTestCase("3");
-            question.setName("question"+i);
-            questionDAO.addQuestion(question);
-            UserQuestion userQuestion = new UserQuestion();
-            userQuestion.setuId(i);
-            userQuestion.setqId(i+1);
-            userQuestionDAO.addUserQuestion(userQuestion);
+
+         List<UserAcCount> list = userExamQuestionDAO.getExamRank(1);
+        for (UserAcCount  userAcCount: list){
+            System.out.println(userAcCount.getuId()+"@@"+userAcCount.getCount());
         }
-        List<Question>  questions = questionDAO.getQuestionList(0,3);
-        UserQuestion userQuestion = userQuestionDAO.selectByUserAndQuestion(1,2);
     }
 }

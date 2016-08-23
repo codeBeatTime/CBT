@@ -1,0 +1,29 @@
+#parse("header.html")
+  <center>
+      <br>
+    <div class="list">
+        ---$!{question.id}--------------------------------------------------------------------$!{question.name}----------------------------------------------------------------------
+       <br><br>
+        <a href="/file/?name=$!{question.qDescribe}"><span class="time" >题目描述下载</span>></a><br><br>
+        <a href="/file/?name=$!{question.testCase}"><span class="time" > 题目用例下载</span>></a><br><br>
+
+    </div>
+--------------------------------------------------------------------题目答案提交---------------------------------------------------------------------
+<form name="myform" action="/questions/juage/?questionId=$!{question.id}" method="post"
+      enctype="multipart/form-data">
+
+    <br>
+    <textarea name="answer" style="width:800px;height:400px;">这里写题目答案,数据之间一个空格，最后一个元素要敲回车</textarea>
+
+    <br>
+    <input type="submit" name="submit" value="Commit">
+</form>
+----------------------------------------------------------------------题目提交结果------------------------------------------------------------------
+<br><br>
+#if($result)
+提交结果：$!{result}
+#else
+请提交您的程序
+#end
+      </center>
+#parse("footer.html")

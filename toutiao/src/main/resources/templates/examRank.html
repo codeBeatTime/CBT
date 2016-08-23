@@ -1,0 +1,20 @@
+#parse("header.html")
+考试排名
+<center>
+    <div class="wid1000">
+
+        <div class="">
+            #set($count = 1)
+            #foreach ($userRank in $listRank)
+            -第$!{count}名---------------------------------------------------------------------------------------------------------------------------------------------------------
+            <br><br>
+            用户名： $!{userRank.user.name} AC数量：${userRank.count}
+            <br><br>
+
+            #set($count = $count + 1)
+            #end
+            <div class=""></div>
+        </div>
+    </div>
+</center>
+#parse("footer.html")

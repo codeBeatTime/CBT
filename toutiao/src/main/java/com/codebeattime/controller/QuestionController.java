@@ -1,7 +1,9 @@
 package com.codebeattime.controller;
 
+import com.codebeattime.dao.ExamDAO;
 import com.codebeattime.dao.QuestionDAO;
 import com.codebeattime.dao.UserDAO;
+import com.codebeattime.model.Exam;
 import com.codebeattime.model.HostHolder;
 import com.codebeattime.model.Question;
 import com.codebeattime.model.User;
@@ -35,6 +37,8 @@ public class QuestionController {
     HostHolder hostHolder;
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    ExamDAO examDAO;
     //获取题目List
     @RequestMapping(path={"/questions/list"},method = {RequestMethod.GET,RequestMethod.POST})
     public String getQuestionsList(Model model){
@@ -50,6 +54,8 @@ public class QuestionController {
         model.addAttribute("question",question);
         return "questionDetail";
     }
+
+
     //接收用户答案 判断是否正确
     @RequestMapping(path={"questions/juage"},method = {RequestMethod.GET,RequestMethod.POST})
 

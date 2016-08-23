@@ -5,6 +5,7 @@
     <sql id="table">news</sql>
     <sql id="selectFields">id,title, link, image, like_count, comment_count,created_date,user_id
     </sql>
+
     <select id="selectByUserIdAndOffset" resultType="com.codebeattime.model.News">
         SELECT
         <include refid="selectFields"/>

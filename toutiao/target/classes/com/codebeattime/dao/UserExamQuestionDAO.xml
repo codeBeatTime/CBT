@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.codebeattime.dao.UserExamQuestionDAO">
+    <sql id="table">user_exam_question</sql>
+    <sql id="selectFields">u_id,count(q_id) as count
+    </sql>
+
+    <select id="getExamRank" resultType="com.codebeattime.model.UserAcCount">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+
+
+        WHERE e_id=#{examId} group by u_id
+        order by count desc
+    </select>
+</mapper>

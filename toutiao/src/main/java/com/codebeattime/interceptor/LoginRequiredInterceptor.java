@@ -23,7 +23,8 @@ public class LoginRequiredInterceptor  implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(hostHolder.getUser()==null){
             //不过没有当前用户则跳转到首页登陆
-            response.sendRedirect("/?pop=1");
+             response.sendRedirect("/?pop=1");
+            //response.sendRedirect("/");
             return false;
         }
         return true;

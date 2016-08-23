@@ -1,0 +1,24 @@
+#parse("header.html")
+<tools> <toolbox scope="application">
+    <tool class="org.apache.velocity.tools.generic.DateTool" format="yyyy-MM-dd"/>
+    当前时间为：  $date.toString()
+</toolbox> </tools>
+<center>
+    <div class="wid1000">
+        <div class="">
+            #foreach ($exam in $examList)
+            ---------------------------------------------------------------------------------------------------------------------------------------------------------
+            <br>
+            考试ID: $!{exam.id} -->
+            <a href="/exam/datil/?examId=$!{exam.id}"><span class="time" >$!{exam.name}</span>></a></li> <br>
+            考试时间时间：$!{exam.startTime} --  $!{exam.endTime}}
+            <br>
+            <a href="/exam/rank/?examId=$!{exam.id}"><span class="time" >本场考试排名</span></a></li><br>
+            ----------------------------------------------------------------------------------------------------------------------------------------------------------
+            <br>
+            #end
+            <div class=""></div>
+        </div>
+    </div>
+</center>
+#parse("footer.html")

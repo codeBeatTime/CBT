@@ -1,0 +1,26 @@
+#parse("header.html")
+<tools> <toolbox scope="application">
+    <tool class="org.apache.velocity.tools.generic.DateTool" format="yyyy-MM-dd"/>
+    当前时间为@：  $date.toString()
+</toolbox> </tools>
+
+<center>
+    <div class="wid1000">
+
+        <div class="">
+            #foreach ($questionId in $questionsId)
+            ---------------------------------------------------------------------------------------------------------------------------------------------------------
+            <br><br>
+            考试ID：$!{examId} -->
+            题目ID: $!{questionId} -->
+
+            <a href="/examQuestion/datil?questionId=$!{questionId}&examid=$!{examId}"><span class="time" >题目ID->$!{questionId}</span>></a></li>
+            <br><br>
+            ----------------------------------------------------------------------------------------------------------------------------------------------------------
+            <br>
+            #end
+            <div class=""></div>
+        </div>
+    </div>
+</center>
+#parse("footer.html")

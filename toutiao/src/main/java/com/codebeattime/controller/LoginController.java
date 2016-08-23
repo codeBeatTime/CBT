@@ -46,9 +46,6 @@ public class LoginController {
             logger.error("注册异常"+e.getMessage());
             return ToutiaoUtil.getJSONString(1,"注册异常");
         }
-
-
-
     }
 
     //实现登陆功能
