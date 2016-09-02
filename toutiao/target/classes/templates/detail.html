@@ -1,4 +1,10 @@
 #parse("header.html")
+
+<script type="text/javascript">
+    function gotonext(link){
+        window.location.href=""+link;
+    }
+</script>
     <div id="main">
         <div class="container">
             <div class="post detail">
@@ -8,9 +14,9 @@
                     <button class="click-dislike down" aria-pressed="true" title="反对"><i class="vote-arrow"></i>
                     </button>
                 </div>
-
-                <div class="content" data-url="">
-                      <div class="content-img">
+                <div class="posts"  onclick = "gotonext(${news.link})">
+                <div class="content" data-url=""   >
+                      <div class="content-img" onclick = "gotonext(${news.link})">
                           <img src="$!{news.image}" alt="">
                       </div>
                       <div class="content-main">
@@ -34,7 +40,7 @@
 
                 <div class="subject-name">来自 <a href="/user/$!{owner.id}">$!{owner.name}</a></div>
             </div>
-
+            </div>
 
             <div class="post-comment-form">
                 #if($user)

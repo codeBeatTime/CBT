@@ -1,10 +1,16 @@
 #parse("header.html")
 
+
+<script type="text/javascript">
+    function gotonext(nid){
+        window.location.href="/news/"+nid;
+    }
+</script>
+
     <div id="main">
         <div class="container" id="daily">
             <div class="jscroll-inner">
                 <div class="daily">
-
                     #set($cur_date = '')
                     #foreach($vo in $vos)
                     #if ($cur_date != $date.format('yyyy-MM-dd', $vo.news.createdDate))
@@ -16,7 +22,7 @@
                         <i class="fa icon-calendar"></i>
                         <span>CBT头条 &nbsp; $date.format('yyyy-MM-dd', $vo.news.createdDate)</span>
                     </h3>
-                    <div class="posts">
+                    <div class="posts" onclick = "gotonext(${vo.news.id})">
                     #end
                         <div class="post">
                             <div class="votebar">
@@ -61,10 +67,9 @@
 
     </div>
 
-
 #if ($pop)
 <script>
-window.loginpop = $!{pop};
+window.loginpop = $pop;
 </script>
 #end
 

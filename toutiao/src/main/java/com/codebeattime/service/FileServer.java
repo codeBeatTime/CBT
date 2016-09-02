@@ -1,7 +1,9 @@
 package com.codebeattime.service;
 
 import com.codebeattime.dao.QuestionDAO;
+import com.codebeattime.dao.StaticImageDAO;
 import com.codebeattime.model.Question;
+import com.codebeattime.model.StaticImage;
 import com.codebeattime.util.ToutiaoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,8 @@ import java.util.UUID;
 public class FileServer {
     @Autowired
     private QuestionDAO questionDAO;
-
+    @Autowired
+    private StaticImageDAO staticImageDAO;
     //选择一定范围的所有Questions
     public List<Question> getQuestionList(int offset,int limit){
         return questionDAO.getQuestionList(offset,limit);
@@ -40,6 +43,7 @@ public class FileServer {
         question.setTestCase(result[1]);
         question.setAnswer(result[2]);
         question.setName(questionName);
+        question.setUrl(staticImageDAO.getRandImage().getUrl());
         questionDAO.addQuestion(question);
         return null;
     }

@@ -1,24 +1,58 @@
 #parse("header.html")
-<tools> <toolbox scope="application">
-    <tool class="org.apache.velocity.tools.generic.DateTool" format="yyyy-MM-dd"/>
-    当前时间为：  $date.toString()
-</toolbox> </tools>
-<center>
-    <div class="wid1000">
-        <div class="">
-            #foreach ($exam in $examList)
-            ---------------------------------------------------------------------------------------------------------------------------------------------------------
-            <br>
-            考试ID: $!{exam.id} -->
-            <a href="/exam/datil/?examId=$!{exam.id}"><span class="time" >$!{exam.name}</span>></a></li> <br>
-            考试时间时间：$!{exam.startTime} --  $!{exam.endTime}}
-            <br>
-            <a href="/exam/rank/?examId=$!{exam.id}"><span class="time" >本场考试排名</span></a></li><br>
-            ----------------------------------------------------------------------------------------------------------------------------------------------------------
-            <br>
-            #end
-            <div class=""></div>
+
+<script type="text/javascript">
+    function gotonext(eid){
+        window.location.href="/exam/datil/?examId="+eid;
+    }
+</script>
+
+<div id="main">
+    <div class="container" id="daily">
+        <div class="jscroll-inner">
+            <div class="daily">
+
+                #foreach ($exam in $examList)
+                #set($endDate = $exam.endTime)
+                <div class="posts"  onclick = "gotonext(${exam.id})">
+
+                    <div class="post" >
+                        <div class="content" data-url="/questions/datil/?questionId=$!{question.id}">
+                            <div >
+                                <img class="content-img" src="$!{exam.url}" alt="">
+                            </div>
+                            <div class="content-main">
+                                <h3 class="title">
+                                    <a target="_self" rel="external nofollow" href="/exam/datil/?examId=$!{exam.id}"> 考试ID: $!{exam.id}</a>
+                                </h3>
+                                <div class="meta">
+                                    #set($startYear = $!{exam.startTime.getYear()} + 1900 )
+                                    #set($endYear = $!{exam.endTime.getYear()} + 1900 )
+                                    考试时间：$startYear/$!{exam.startTime.getMonth()}/$!{exam.startTime.getDay()} $!{exam.startTime.Hours}:$!{exam.startTime.getMinutes()}:$!{exam.startTime.getSeconds()}
+                                    ---
+                                    $endYear/$!{exam.endTime.getMonth()}/$!{exam.endTime.getDay()} $!{exam.endTime.Hours}:$!{exam.endTime.getMinutes()}:$!{exam.endTime.getSeconds()}
+
+                                    <span>
+
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <a href="/exam/rank/?examId=$!{exam.id}">当前排名</a>
+                            </div>
+                        </div>
+
+                        <div class="subject-name"><a href="/user/$!{vo.user.id}/">
+                           </a></div>
+                    </div>
+                    #end
+
+                </div>
+            </div>
         </div>
+</div>
     </div>
-</center>
+
 #parse("footer.html")
+

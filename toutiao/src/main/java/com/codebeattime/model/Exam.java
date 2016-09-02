@@ -10,6 +10,16 @@ public class Exam {
     private Date startTime;
     private  Date endTime;
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    private  String url;
+
     public String getName() {
         return name;
     }
@@ -26,6 +36,7 @@ public class Exam {
 
     public void setId(int id) {
         this.id = id;
+
     }
 
     public Date getStartTime() {

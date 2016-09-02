@@ -1,20 +1,43 @@
 #parse("header.html")
 
-<center>
-<div class="wid1000">
+<script type="text/javascript">
+    function gotonext(qid){
+        window.location.href="/questions/datil/?questionId="+qid;
+    }
+</script>
 
-    <div class="">
-        #foreach ($question in $questions)
-        ---------------------------------------------------------------------------------------------------------------------------------------------------------
-        <br><br>
-            题目ID: $!{question.id} -->
-            <a href="/questions/datil/?questionId=$!{question.id}"><span class="time" >$!{question.name}</span>></a></li>
-        <br><br>
-        ----------------------------------------------------------------------------------------------------------------------------------------------------------
-        <br>
-        #end
-        <div class=""></div>
+<div id="main">
+    <div class="container" id="daily">
+        <div class="jscroll-inner">
+            <div class="daily">
+
+                #foreach ($question in $questions)
+            <div class="posts" onclick = "gotonext(${question.id})">
+
+                <div class="post">
+                    <div class="content" data-url="/questions/datil/?questionId=$!{question.id}">
+                        <div >
+                            <img class="content-img" src="$!{question.url}" alt="">
+                        </div>
+                        <div class="content-main">
+                            <h3 class="title">
+                                <a target="_self" rel="external nofollow" href="/questions/datil/?questionId=$!{question.id}">$!{question.name}</a>
+                            </h3>
+                            <div class="meta">
+                                题目ID  $!{question.id}
+                                <span>
+                                    AC 数量$!{vo.news.commentCount}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            #end
+
+        </div>
     </div>
 </div>
-</center>
+</div>
+</div>
+
 #parse("footer.html")

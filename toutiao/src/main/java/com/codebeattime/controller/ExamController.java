@@ -5,6 +5,7 @@ import com.codebeattime.model.*;
 import com.codebeattime.service.ExamService;
 import com.codebeattime.service.QuestionService;
 import com.codebeattime.util.ToutiaoUtil;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2016/8/21.
@@ -42,6 +40,8 @@ public class ExamController {
     UserExamQuestionDAO userExamQuestionDAO;
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    StaticImageDAO staticImageDAO;
    @RequestMapping(path={"/exams/list"},method={RequestMethod.GET,RequestMethod.POST})
    public String getExamList(Model model){
        List<Exam> examList = examService.getExamList(0,100);
@@ -70,8 +70,16 @@ public class ExamController {
     @RequestMapping(path = {"/exam/datil"},method ={RequestMethod.POST,RequestMethod.GET})
     public  String getExamDetail(@RequestParam("examId")int examId,Model model){
         List<Integer> questionsId = examQuestionDAO.getQuestionsByEId(examId);
+        List<Question> questions = new ArrayList<Question>();
+        for(Integer id :questionsId){
+            Question question = questionDAO.getQuestionById(id);
+            questions.add(question);
+        }
         model.addAttribute("questionsId",questionsId);
         model.addAttribute("examId",examId);
+        Exam exam = examDAO.getExamById(examId);
+        model.addAttribute("exam",exam);
+        model.addAttribute("questions",questions);
         return "examDetail";
     }
     //获取某一场考试某一个题目信息并显示详情页
@@ -84,7 +92,9 @@ public class ExamController {
         }
 
         Question question = questionDAO.getQuestionById(id);
-
+        if(question.getUrl()==null){
+            question.setUrl(staticImageDAO.getRandImage().getUrl());
+        }
         model.addAttribute("question",question);
 
         return "examQuestionDetail";
@@ -103,16 +113,38 @@ public class ExamController {
         //获取当前用户
         User user = hostHolder.getUser();
         if (user == null) return "home";
-        //判断答案是否正确
+
         Question question = questionDAO.getQuestionById(questionId);
         Date date = new Date(System.currentTimeMillis());
+        model.addAttribute("question", question);
+        //判断考试是否已经结束
+        Date curDate = new Date();
+        //如果考试结束时间小于当前时间，说明考试已经结束
+        if(exam.getEndTime().compareTo(curDate)==-1){
+            model.addAttribute("result","考试已经结束，请关闭浏览器");
+            return "examQuestionDetail";
+        }
+        //过滤已经正确的情况
+        if(hasAc(user.getId(),exam.getId(),question.getId())) {
+            model.addAttribute("result","您已经通过此题，无需重复提交");
+            return "examQuestionDetail";
+        }
+        //判断答案是否正确
         boolean isRight = examService.isRight(answer,question,user,exam,date);
         String result = "恭喜您结果正确";
         if (!isRight) result = "你的答案错误";
         model.addAttribute("result", result);
-        model.addAttribute("question", question);
+
 
         return "examQuestionDetail";
+    }
+    //判断考试题是否已经被正确提交了
+    public boolean hasAc(int userId,int examId,int questionId){
+        UserExamQuestion userExamQuestion = userExamQuestionDAO.getByUEQID(userId,examId,questionId);
+        if(userExamQuestion==null){
+            return false;
+        }
+        return true;
     }
     //获取某一场考试的排名
     @RequestMapping(path={"/exam/rank"},method = {RequestMethod.GET})

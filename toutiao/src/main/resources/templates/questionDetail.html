@@ -1,33 +1,61 @@
 #parse("header.html")
-#if($!{exam})
-$!{exam.id}
-#end
-$!{exam.id}
-  <center>
-      <br>
-    <div class="list">
-        ---$!{question.id}--------------------------------------------------------------------$!{question.name}----------------------------------------------------------------------
-       <br><br>
-        <a href="/file/?name=$!{question.qDescribe}"><span class="time" >题目描述下载</span>></a><br><br>
-        <a href="/file/?name=$!{question.testCase}"><span class="time" > 题目用例下载</span>></a><br><br>
 
+<div id="main">
+    <div class="container" id="daily">
+        <div class="jscroll-inner">
+            <div class="daily">
+
+
+                <center>
+                    <tools> <toolbox scope="application">
+                        <tool class="org.apache.velocity.tools.generic.DateTool" format="yyyy-MM-dd"/>
+                        $date.toString()
+
+                    </toolbox> </tools>
+                </center>
+
+                <div class="posts">
+
+                    <div class="post">
+                        <div class="content" data-url="/questions/datil/?questionId=$!{question.id}">
+                            <div >
+                                <img class="content-img" src="$!{vo.news.image}" alt="">
+                            </div>
+                            <div class="content-main">
+                                <h3 class="title">
+                                    <a target="_blank" rel="external nofollow" >$!{question.name}</a>
+
+                                </h3>
+                                <div class="meta">
+                                    <a target="_blank" rel="external nofollow" href="/file/?name=$!{question.qDescribe}">题目描述下载</a>
+                                    <span>
+                                     <a href="/file/?name=$!{question.testCase}"><span class="time" > 题目用例下载 </span></a>
+                                </span>
+
+                                </div>
+                            </div>
+                            <form name="myform" action="/questions/juage/?questionId=$!{question.id}" method="post"
+                                  enctype="multipart/form-data">
+
+                                <br>
+                                <textarea name="answer" style="width:700px;height:300px;">这里写题目答案,数据之间一个空格，最后一个元素要敲回车</textarea>
+
+                                <br>
+                                <input type="submit" name="submit" value="Commit">
+                            </form>
+                            <h3 class="title">
+                                #if($result)
+                                提交结果：$!{result}
+                                #else
+                                请提交您的程序
+                                #end
+                            </h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
---------------------------------------------------------------------题目答案提交---------------------------------------------------------------------
-<form name="myform" action="/questions/juage/?questionId=$!{question.id}" method="post"
-      enctype="multipart/form-data">
-
-    <br>
-    <textarea name="answer" style="width:800px;height:400px;">这里写题目答案,数据之间一个空格，最后一个元素要敲回车</textarea>
-
-    <br>
-    <input type="submit" name="submit" value="Commit">
-</form>
-----------------------------------------------------------------------题目提交结果------------------------------------------------------------------
-<br><br>
-#if($result)
-提交结果：$!{result}
-#else
-请提交您的程序
-#end
-      </center>
+</div>
 #parse("footer.html")

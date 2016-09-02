@@ -47,8 +47,7 @@ public class ExamService {
     }
     //判断考试题是否正确
     public boolean isRight(String answer,Question question,User user,Exam exam,Date date){
-        //过滤已经正确的情况
-        if(hasAc(user.getId(),exam.getId(),question.getId())) return true;
+
         //判断题目是否正确
         String rightAnswer = "";
         try {

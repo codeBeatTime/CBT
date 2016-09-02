@@ -1,19 +1,37 @@
 #parse("header.html")
-<center>
-    <div class="wid1000">
+<div id="main">
+    <div class="container" id="daily">
+        <div class="jscroll-inner">
+            <div class="daily">
 
-        <div class="">
-            #set($count = 1)
-            #foreach ($user in $userList)
-            -第$!{count}名---------------------------------------------------------------------------------------------------------------------------------------------------------
-            <br><br>
-            用户名： $!{user.name} AC数量：${user.acCount}
-            <br><br>
+                #set($count = 1)
+                #foreach ($user in $userList)
+                <div class="posts">
+                    <div class="post">
+                        <div class="content" data-url="/questions/datil/?questionId=$!{question.id}">
+                            <div >
+                                <img class="content-img" src="$!{user.headUrl}" alt="">
+                            </div>
+                            <div class="content-main">
+                                <h3 class="title">
+                                    <a target="_blank" rel="external nofollow" >第$!{count}名</a>
+                                </h3>
+                                <div class="meta">
+                                    $!{user.name}
+                                    <span>
+                                      AC ${user.acCount}  题
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    #set($count = $count + 1)
+                    #end
 
-            #set($count = $count + 1)
-            #end
-            <div class=""></div>
+                </div>
+            </div>
         </div>
+</div>
     </div>
-</center>
-#parse("footer.html")
+
+    #parse("footer.html")

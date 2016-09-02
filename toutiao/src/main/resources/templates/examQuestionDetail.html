@@ -1,33 +1,103 @@
 #parse("header.html")
-#if($!{exam})
-$!{exam.id}
-#end
-$!{exam.id}
-<center>
-    <br>
-    <div class="list">
-        ---$!{question.id}--------------------------------------------------------------------$!{question.name}----------------------------------------------------------------------
-        <br><br>
-        <a href="/file/?name=$!{question.qDescribe}"><span class="time" >题目描述下载</span>></a><br><br>
-        <a href="/file/?name=$!{question.testCase}"><span class="time" > 题目用例下载</span>></a><br><br>
+#set($endDate = $exam.endTime)
+#set($endSeconds = $!{endDate.getTime()})
+<style type="text/css">
 
+    .time-item strong{background:#C71C60;color:#fff;line-height:49px;font-size:36px;font-family:Arial;padding:0 10px;margin-right:10px;border-radius:5px;box-shadow:1px 1px 3px rgba(0,0,0,0.2);}
+    #day_show{float:left;line-height:49px;color:#c71c60;font-size:32px;margin:0 10px;font-family:Arial, Helvetica, sans-serif;}
+    .item-title .unit{background:none;line-height:49px;font-size:24px;padding:0 10px;float:left;}
+
+</style>
+
+<script type="text/javascript">
+    var myDate = new Date();
+
+    var intDiff = parseInt((${endSeconds} - myDate.getTime())/1000);//倒计时总秒数量
+
+    function timer(intDiff){
+        window.setInterval(function(){
+            var day=0,
+                    hour=0,
+                    minute=0,
+                    second=0;//时间默认值
+            if(intDiff > 0){
+                day = Math.floor(intDiff / (60 * 60 * 24));
+                hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+            }
+            if (minute <= 9) minute = '0' + minute;
+            if (second <= 9) second = '0' + second;
+            $('#day_show').html(day+"天");
+            $('#hour_show').html('<s id="h"></s>'+hour+'时');
+            $('#minute_show').html('<s></s>'+minute+'分');
+            $('#second_show').html('<s></s>'+second+'秒');
+            intDiff--;
+        }, 1000);
+    }
+    $(function(){
+        timer(intDiff);
+    });
+</script>
+
+
+
+<!--<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+</div>-->
+
+<div id="main">
+    <div align="center" style="width:416px; margin:0 auto">
+        <div class="time-item">
+            <span id="day_show">0天</span>
+            <strong id="hour_show">0时</strong>
+            <strong id="minute_show">0分</strong>
+            <strong id="second_show">0秒</strong>
+        </div>
     </div>
-    --------------------------------------------------------------------题目答案提交---------------------------------------------------------------------
-    <form name="myform" action="/exam/juage/?questionId=$!{question.id}&examId=$!{exam.id}" method="post"
-          enctype="multipart/form-data">
+    <div class="container" id="daily">
+        <div class="jscroll-inner">
+            <div class="daily">
 
-        <br>
-        <textarea name="answer" style="width:800px;height:400px;">这里写题目答案,数据之间一个空格，最后一个元素要敲回车</textarea>
 
-        <br>
-        <input type="submit" name="submit" value="Commit">
-    </form>
-    ----------------------------------------------------------------------题目提交结果------------------------------------------------------------------
-    <br><br>
-    #if($result)
-    提交结果：$!{result}
-    #else
-    请提交您的程序
-    #end
-</center>
+                    <div class="post">
+                        <div class="content" data-url="/questions/datil/?questionId=$!{question.id}">
+                            <div >
+
+                                <img class="content-img" src="$!{question.url}" alt="">
+                            </div>
+                            <div class="content-main">
+                                <h3 class="title">
+                                    <a target="_blank" rel="external nofollow" >$!{question.name}</a>
+                                </h3>
+                                <div class="meta">
+                                    <a target="_blank" rel="external nofollow" href="/file/?name=$!{question.qDescribe}">题目描述下载</a>
+                                    <span>
+                                     <a href="/file/?name=$!{question.testCase}"><span class="time" > 题目用例下载 </span></a>
+                                    </span>
+                                </div>
+                            </div>
+                            <form name="myform" action="/exam/juage/?questionId=$!{question.id}&examId=$!{exam.id}" method="post"
+                                  enctype="multipart/form-data">
+
+                                <br>
+                                <textarea name="answer" style="width:700px;height:300px;">这里写题目答案,数据之间一个空格，最后一个元素要敲回车</textarea>
+
+                                <br>
+                                <input type="submit" name="submit" value="Commit">
+                            </form>
+                            <h3 class="title">
+                                #if($result)
+                                提交结果：$!{result}
+                                #else
+                                请提交您的程序
+                                #end
+                            </h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
 #parse("footer.html")

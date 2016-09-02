@@ -19,8 +19,10 @@ public class ToutiaoUtil {
     private static final Logger logger = LoggerFactory.getLogger(ToutiaoUtil.class);
     public  static String TOUTIAO_DOMAIN = "http://codebeattime.online/";
     public  static String QINIU_DOMAIN_PREFIX = "http://oaaktbc5o.bkt.clouddn.com/";
-    public static String IMAGE_DIR = "E:/upload/";
-    public static String FILE_DIR = "E:/uploadFiles/";
+    public  static String QINIU_DOMAIN_PREFIX_STATICIMAGE= "http://oce6d7vkz.bkt.clouddn.com/";
+    public  static String IMAGE_FORMAT = "?imageView2/0/w/100";
+    public static String IMAGE_DIR = "C:/upload/";
+    public static String FILE_DIR = "C:/uploadFiles/";
     public static String[] IMAGE_FILE_EXTD = {"png","bmp","jpg","jpeg"};
     public static String[] TXT_FILE_EXID = {"txt"};
     //读取文件的内容并以字符串返回

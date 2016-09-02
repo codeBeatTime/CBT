@@ -46,12 +46,13 @@
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 
             <ul class="nav navbar-nav navbar-right">
-                #if ($user)
+
                 <li class="js-share"><a href="javascript:void(0);">分享</a></li>
                 <li class=""><a href="/msg/list">站内信</a></li>
                 <li class="qq"><a href="/exams/list">在线考试</a></li>
                 <li class="qq"><a href="/questions/list">编程练习</a></li>
                 <li class="qq"><a href="/questions/rank?limit=0 &&offset=100">排行榜</a></li>
+                #if ($user)
                 <li class=""><a href="/user/$!{user.id}/">$!{user.name}</a></li>
                 #else
                 <li class="js-login"><a href="javascript:void(0);">登陆</a></li>

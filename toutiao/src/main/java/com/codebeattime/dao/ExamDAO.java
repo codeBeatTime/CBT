@@ -15,7 +15,7 @@ import java.util.List;
 public interface ExamDAO {
     String TABLE_NAME = "exam";
     String INSERT_FIELDS = " start_time,end_time,name ";
-    String SELECT_FIELDS = " id, " + INSERT_FIELDS;
+    String SELECT_FIELDS = " id, " + INSERT_FIELDS+",url";
     //获取考试列表
     @Select({"select ",SELECT_FIELDS,"from",TABLE_NAME ,"order by id desc limit #{offset},#{limit}"})
     List<Exam> getExamList(@Param("offset")int offset,@Param("limit")int limit);

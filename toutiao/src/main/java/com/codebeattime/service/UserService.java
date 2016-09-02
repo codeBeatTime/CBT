@@ -1,5 +1,6 @@
 package com.codebeattime.service;
 
+import com.codebeattime.dao.StaticImageDAO;
 import com.codebeattime.dao.UserDAO;
 import com.codebeattime.model.LoginTicket;
 import com.codebeattime.model.User;
@@ -24,6 +25,8 @@ public class  UserService {
 
     @Autowired
     private LoginTicketDAO loginTicketDAO;
+    @Autowired
+    private StaticImageDAO staticImageDAO;
     public Map<String,Object> register(String username,String password){
         //错误信息处理
         Map<String,Object>  map = new HashMap<String,Object>();
@@ -45,7 +48,7 @@ public class  UserService {
         user.setName(username);
         //为了让密码更加保密
         user.setSalt(UUID.randomUUID().toString().substring(0,5));
-        user.setHeadUrl("headUrl");
+        user.setHeadUrl(staticImageDAO.getRandImage().getUrl());
         //头像就先不处理
         //密码加密 md5加密写在util中 用户的密码+随机的密码
         user.setPassword(ToutiaoUtil.MD5(password+user.getSalt()));

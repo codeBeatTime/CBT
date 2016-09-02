@@ -1,20 +1,39 @@
 #parse("header.html")
-考试排名
-<center>
-    <div class="wid1000">
+<div id="main">
+    <div class="container" id="daily">
+        <div class="jscroll-inner">
+            <div class="daily">
 
-        <div class="">
-            #set($count = 1)
-            #foreach ($userRank in $listRank)
-            -第$!{count}名---------------------------------------------------------------------------------------------------------------------------------------------------------
-            <br><br>
-            用户名： $!{userRank.user.name} AC数量：${userRank.count}
-            <br><br>
+                #set($count = 1)
+                #foreach ($userRank in $listRank)
+                <div class="posts">
 
-            #set($count = $count + 1)
-            #end
-            <div class=""></div>
+                    <div class="post">
+                        <div class="content" data-url="/questions/datil/?questionId=$!{question.id}">
+                            <div >
+                                <img class="content-img" src="http://oce6d7vkz.bkt.clouddn.com/326d8d7f145aeedca4d8dcc583209529.jpg?imageView2/0/w/100" alt="">
+                            </div>
+                            <div class="content-main">
+                                <h3 class="title">
+                                    <a target="_blank" rel="external nofollow" >第$!{count}名</a>
+                                </h3>
+                                <div class="meta">
+                                    $!{userRank.user.headUrl}
+                                    $!{userRank.user.name}
+                                    <span>
+                                     AC $!{userRank.count}  题
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    #set($count = $count + 1)
+                    #end
+
+                </div>
+            </div>
         </div>
     </div>
-</center>
-#parse("footer.html")
+</div>
+
+    #parse("footer.html")

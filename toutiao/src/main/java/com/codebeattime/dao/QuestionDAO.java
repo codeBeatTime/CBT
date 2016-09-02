@@ -15,7 +15,7 @@ import java.util.List;
 public interface QuestionDAO {
     String TABLE_NAME = "question";
     String INSERT_FIELDS = " q_describe, test_case, answer,name ";
-    String SELECT_FIELDS = " id, " + INSERT_FIELDS;
+    String SELECT_FIELDS = " id, " + INSERT_FIELDS+",url";
     //插入question
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,") values (#{qDescribe},#{testCase},#{answer},#{name})"})
      int addQuestion(Question question);

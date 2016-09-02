@@ -1,26 +1,103 @@
 #parse("header.html")
-<tools> <toolbox scope="application">
-    <tool class="org.apache.velocity.tools.generic.DateTool" format="yyyy-MM-dd"/>
-    当前时间为@：  $date.toString()
-</toolbox> </tools>
 
-<center>
-    <div class="wid1000">
 
-        <div class="">
-            #foreach ($questionId in $questionsId)
-            ---------------------------------------------------------------------------------------------------------------------------------------------------------
-            <br><br>
-            考试ID：$!{examId} -->
-            题目ID: $!{questionId} -->
 
-            <a href="/examQuestion/datil?questionId=$!{questionId}&examid=$!{examId}"><span class="time" >题目ID->$!{questionId}</span>></a></li>
-            <br><br>
-            ----------------------------------------------------------------------------------------------------------------------------------------------------------
-            <br>
-            #end
-            <div class=""></div>
-        </div>
+#set($endDate = $exam.endTime)
+#set($endSeconds = $!{endDate.getTime()})
+
+<style type="text/css">
+
+    .time-item strong{background:#C71C60;color:#fff;line-height:49px;font-size:36px;font-family:Arial;padding:0 10px;margin-right:10px;border-radius:5px;box-shadow:1px 1px 3px rgba(0,0,0,0.2);}
+    #day_show{float:left;line-height:49px;color:#c71c60;font-size:32px;margin:0 10px;font-family:Arial, Helvetica, sans-serif;}
+    .item-title .unit{background:none;line-height:49px;font-size:24px;padding:0 10px;float:left;}
+
+</style>
+
+<script type="text/javascript" src="http://www.codefans.net/ajaxjs/jquery-1.6.2.min.js"></script>
+<script type="text/javascript">
+    var myDate = new Date();
+
+    var intDiff = parseInt((${endSeconds} - myDate.getTime())/1000);//倒计时总秒数量
+    function timer(intDiff){
+        window.setInterval(function(){
+            var day=0,
+                    hour=0,
+                    minute=0,
+                    second=0;//时间默认值
+            if(intDiff > 0){
+                day = Math.floor(intDiff / (60 * 60 * 24));
+                hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+            }
+            if (minute <= 9) minute = '0' + minute;
+            if (second <= 9) second = '0' + second;
+            $('#day_show').html(day+"天");
+            $('#hour_show').html('<s id="h"></s>'+hour+'时');
+            $('#minute_show').html('<s></s>'+minute+'分');
+            $('#second_show').html('<s></s>'+second+'秒');
+            intDiff--;
+        }, 1000);
+    }
+    $(function(){
+        timer(intDiff);
+    });
+    function gotonext(qid,eid){
+        window.location.href="/examQuestion/datil?questionId="+qid+"&examid="+eid;
+    }
+</script>
+
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+</div>
+
+<div id="main">
+<div align="center" style="width:416px; margin:0 auto">
+    <div class="time-item">
+        <span id="day_show">0天</span>
+        <strong id="hour_show">0时</strong>
+        <strong id="minute_show">0分</strong>
+        <strong id="second_show">0秒</strong>
     </div>
-</center>
-#parse("footer.html")
+</div>
+    <div class="container" id="daily">
+        <div class="jscroll-inner">
+            <div class="daily">
+
+                #set($count = 1)
+                #foreach ($question in $questions)
+
+                <div class="posts"  onclick = "gotonext($!{question.id},$!{examId})">
+
+                    <div class="post">
+                        <div class="content" data-url="/questions/datil/?questionId=$!{question.id}">
+                            <div onclick="">
+                                <img class="content-img" src="$!{question.url}" alt="">
+                            </div>
+                            <div class="content-main">
+                                <h3 class="title">
+                                    <a target="_self" rel="external nofollow" href="/examQuestion/datil?questionId=$!{question.id}&examid=$!{examId}">第$!{count}题</a>
+
+                                </h3>
+                                <div class="meta">
+                                    考试ID：$!{examId}
+                                    <span>
+                                     题目ID  $!{question.id}
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    #set($count = $count + 1)
+                    #end
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+ #parse("footer.html")

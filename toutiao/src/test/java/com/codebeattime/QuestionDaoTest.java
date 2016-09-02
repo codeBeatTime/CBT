@@ -8,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import com.qiniu.common.QiniuException;
+import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
+import com.qiniu.storage.model.FileInfo;
+import com.qiniu.storage.model.FileListing;
+import com.qiniu.util.Auth;
 
 import java.util.Date;
 import java.util.List;
@@ -29,12 +35,14 @@ public class QuestionDaoTest {
     private ExamQuestionDAO examQuestionDAO;
     @Autowired
     private UserExamQuestionDAO userExamQuestionDAO;
+    @Autowired
+    private StaticImageDAO staticImageDAO;
     @Test
     public void initData() {
-
-         List<UserAcCount> list = userExamQuestionDAO.getExamRank(1);
-        for (UserAcCount  userAcCount: list){
-            System.out.println(userAcCount.getuId()+"@@"+userAcCount.getCount());
-        }
+       for(int i=0;i<10;i++){
+           StaticImage staticImage = staticImageDAO.getRandImage();
+           System.out.println(staticImage.getUrl());
+       }
     }
+
 }
